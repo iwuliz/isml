@@ -59,7 +59,7 @@ def svm_train_dual(data_train, label_train, regularisation_para_C):
 
     # generate classifier
     classifier = np.vstack((np.array([w]).T, bias))
-    print('\nw, b:')
+    print('\n* w, b:')
     print(classifier[::, :1])
 
     # save svm as a file for analysis

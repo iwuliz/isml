@@ -12,5 +12,6 @@ def label(s):
 
 def load_data_set(filepath):
     data_set = np.loadtxt(filepath, dtype=float, delimiter=',', converters={0: label})
+    np.random.shuffle(data_set)
     label_arr, data_arr = np.split(data_set, indices_or_sections=(1,), axis=1)
     return data_arr, label_arr

@@ -44,10 +44,10 @@ def svm_train_primal(data_train, label_train, regularisation_para_C):
     print('Solving primal optimal...')
     sol = solvers.qp(P, q, G, h)
     print(np.array(sol['status']))
-    classifier = sol['x'][:m + 1]
+    classifier = np.array(sol['x'][:m + 1])
     print(classifier)
 
     # save svm as a file for analysis
-    np.savetxt('../../output/svm_model_primal', classifier, fmt="%.16f", delimiter=',')
+    np.savetxt('../../output/svm_model_primal', classifier[::, :1], fmt="%.16f", delimiter=',')
 
     return classifier
