@@ -25,11 +25,8 @@ data_train, label_train = load.load_data_set('../../data/a1_svm/train.csv')
 # load testing data
 data_test, label_test = load.load_data_set('../../data/a1_svm/test.csv')
 
-
 # train primal and dual models in different mode
 mode = main(sys.argv)
-#svm_model = np.zeros((201, 1))
-#svm_model_d = np.zeros((201, 1))
 
 if mode not in ['0', '1', '2']:
     print("\nPlease choose a correct operation mode!"
@@ -41,20 +38,20 @@ else:
         if mode == '0':
             # 0. Find optimal C by cross validation
             print('\n# 0. Cross validation: decide optimal C for primal & dual SVM\n')
-            Cs = [1, 5, 10, 100]
+            Cs = [1, 3, 5, 7, 10, 15, 100]
             regularisation_para_C = validate.cross_validate(data_train, label_train, 5, Cs)
         # mode 1: skip cross validation, use optimal C directly
         else:
             regularisation_para_C = 5
 
-        # 1. Implement Primal SVM and predict
+        # 1. implement Primal SVM and predict
         # train svm in the primal
-        print('\n\n# 1. Primal: Implement SVM')
+        print('\n\n# 1. Primal: implement SVM')
         svm_model = primal.svm_train_primal(data_train, label_train, regularisation_para_C)
 
-        # 2. Implement Dual SVM and predict
+        # 2. implement Dual SVM and predict
         # train svm in the dual
-        print('\n\n# 2. Dual: Implement SVM')
+        print('\n\n# 2. Dual: implement SVM')
         svm_model_d = dual.svm_train_dual(data_train, label_train, regularisation_para_C)
 
     # mode 2: will not train the model, just load model to predict
@@ -65,7 +62,6 @@ else:
         print('\n\n# 2. Dual: Load model')
         svm_model_d = np.loadtxt('../../output/svm_model_primal', dtype=float, delimiter=',')
         svm_model_d = svm_model_d.reshape(svm_model_d.size, 1)
-
 
     # 3. use sklearn implementations for comparison
     # train & predict with sklearn

@@ -11,7 +11,7 @@ import draw
 def svm_sk(data_train, label_train, mode):
     if mode == '0':
         print('\n## Grid search: decide optimal C for sklearn SVM')
-        Cs = [0.0001, round(1/8500,8), 0.0005, round(5/8500,8), 0.001, 0.01, 0.1]
+        Cs = [0.0001, round(1/8500,8), 0.0005, round(5/8500,8), 0.001, 0.01, 0.1, 1]
         tuned_parameters = [{'C': Cs}]
 
         # use GridSearchCV，to search for best parameters for SVC()

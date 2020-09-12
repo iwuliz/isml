@@ -11,7 +11,6 @@ import draw
 
 def validate_score(data, label, k, C):
     m = len(data[0])  # features
-    n = len(label)
     fold_data = np.split(data, k, axis=0)
     fold_label = np.split(label, k, axis=0)
     scores = np.zeros((k, 1))

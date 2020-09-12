@@ -12,9 +12,24 @@ def compare_svm(model1, model2, name1, name2):
     b1 = model1[m]
     w2 = model2[:m]
     b2 = model2[m]
-    w_diff = np.abs(w1-w2)
+    w_diff = np.abs(w1 - w2)
     w_diff_pct = np.abs(100 * w_diff / w1)
-    b_diff = abs(b1-b2)
+    b_diff = abs(b1 - b2)
+
+    # draw scatter of w values
+    plt.figure(figsize=(8, 4))
+    plt.title('w values of %s SVM and %s SVM' % (name1, name2))
+    plt.xlabel('i')
+    plt.ylabel('w[i]')
+
+    x_axis = np.array([i for i in range(0, m)])
+    plt.scatter(x_axis, [w for w in w1.squeeze()], s=10, c='r', alpha=0.5, label=name1+' w values')
+    plt.scatter(x_axis, [w for w in w2.squeeze()], s=10, c='b', alpha=0.5, label=name2+' w values')
+
+    plt.xlim([-1, 200])
+    plt.legend()
+    plt.savefig('../../output/w_values_%s&%s.png' % (name1, name2))
+    plt.show()
 
     # draw distribution of difference of w
     plt.figure(figsize=(8, 4))
@@ -26,11 +41,8 @@ def compare_svm(model1, model2, name1, name2):
     plt.bar(x_axis, [i for i in w_diff_pct.squeeze()], color='bgr')
 
     plt.xlim([-1, 200])
-    plt.savefig('../../output/w_%s&%s.png' % (name1, name2))
+    plt.savefig('../../output/w_diff_%s&%s.png' % (name1, name2))
     plt.show()
-
-    #index_min, index_max = int(w_diff.argmin()), int(w_diff.argmax())
-    #w_diff_min, w_diff_max = w_diff[index_min], w_diff[index_max]
 
     # print difference
     print('\n## Difference between %s and %s' % (name1, name2))
@@ -38,13 +50,4 @@ def compare_svm(model1, model2, name1, name2):
     print('     w_diff_pct: in range (%.8f%%, %.8f%%)' % (w_diff_pct.min(), w_diff_pct.max()))
     print('                 mean = %.8f%%' % w_diff_pct.mean())
     print('                 std  = %.8f%%' % w_diff.std())
-    print('     b_diff: %.8f (%.8f%%)' % (b_diff, 100*b_diff/b1))
-
-# compare with stored model if you would like to
-'''
-#model_primal = np.loadtxt('../../output/svm_model_primal', dtype=float, delimiter=',')
-#model_dual = np.loadtxt('../../output/svm_model_primal', dtype=float, delimiter=',')
-#model_sk = np.loadtxt('../../output/sk_svm_model', dtype=float, delimiter=',')
-'''
-
-
+    print('     b_diff: %.8f (%.8f%%)' % (b_diff, 100 * b_diff / b1))

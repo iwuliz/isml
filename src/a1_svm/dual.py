@@ -4,7 +4,6 @@
 import numpy as np
 from cvxopt import solvers
 from cvxopt import matrix as mx
-import time
 
 
 # function of training svm in the dual with cvxopt
