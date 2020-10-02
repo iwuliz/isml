@@ -7,7 +7,7 @@ import math
 import stump
 
 
-# train Adaboost
+# train AdaBoost
 def adaboost_train(data, label):
 
     # initialise
@@ -20,12 +20,12 @@ def adaboost_train(data, label):
 
     # repeat to train
     while t < 100:
-        print('  Weak classifier ', t)
+        print('   Weak classifier ', t+1)
 
         # build decision stump
         best_stump, err_t, best_label = stump.build_stump(data, label, D)
-        print('    best stump: ', best_stump)
-        print('    err_t = ', err_t[0])
+        print('     best stump: ', best_stump)
+        print('     err_t = ', err_t[0])
 
         # compute alpha_t
         a = 1 / 2 * math.log((1 - err_t) / max(err_t, 1e-16))  # to avoid overflow when err==0
@@ -35,12 +35,12 @@ def adaboost_train(data, label):
         errs[(predict * label) > 0] = 0
         err_t = errs.sum() / m
         err.append(err_t)
-        print('    alpha_t = ', a)
-        print('    wighted err = ', err_t)
-
+        print('     alpha_t = ', a)
+        print('     wighted err = ', err_t)
+        '''
         if err == 0:
             break
-
+        '''
         # update D
         for i in range(m):
             D[i] = D[i] * math.exp(-a * best_label[i] * label[i])

@@ -4,6 +4,7 @@
 
 import numpy as np
 
+
 # classify by one-dim
 def stump_classify(data, feature_id, thresh, LOR):
     predict = np.ones((data.shape[0],1))

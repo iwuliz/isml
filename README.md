@@ -33,11 +33,11 @@ Console command: python main.py 2 or python3 main.py 2
 
 * Intro_to_Statis_Machine_learning-Assignment_1_report-Wuli_Zuo-a1785343.pdf:  Report to my A1  
 including:  
-1. Understanding of SVM  
-2. A brief explanation of how I implemented my code,  
-3. Experiments and result analysis;  
-4. Appendix: The cvxopt forms and construction of coefficient matrix
-5. Reference
+    1. Understanding of SVM  
+    2. A brief explanation of how I implemented my code,  
+    3. Experiments and result analysis;  
+    4. Appendix: The cvxopt forms and construction of coefficient matrix
+    5. Reference
 
 #### Code
 
@@ -66,14 +66,14 @@ including:
 
 ### Introduction
 
-This practice aims to implement Adaboost  
+This practice aims to implement AdaBoost  
 using decision stump as weak learners,  
-and compare the results with an third-party scikit-learn Adaboost and SVM.
+and compare the results with an third-party scikit-learn AdaBoost and SVM.
 
 ### How to run  
  
 Console command: python main.py or python3 main.py  
->note: This would take 5 minutes to complete.    
+>note: This would take 3 minutes to complete.    
 > Please ensure that the data files 'wdbc_data.csv' are at directory: data/  
 > The output files are at: output/  
  
@@ -84,27 +84,29 @@ Console command: python main.py or python3 main.py
 
 * Intro_to_Statis_Machine_learning-Assignment_2_report-Wuli_Zuo-a1785343.pdf:  Report to my A2  
 including:  
-1. Description of the Adaboost method  
-2. Understanding of Adaboost  
-3. Introduction of how to run my code  
-4. Experiments and result analysis  
-5. Reference
+    1. Description of the AdaBoost method  
+    2. Understanding of AdaBoost  
+    3. Introduction of how to run my code  
+    4. Experiments and result analysis  
+    5. Reference
 
 #### Code
 
 * main.py: The program entry, control the experiment process.  
 * load.py: The python script to load data from the data file.  
 * stump.py: Implementation of decision stump.  
-* adaboost.py: Implementation of Adaboost algorithm.  
-* predict.py: The python script to predict test data with my Adaboost model.  
+* adaboost.py: Implementation of AdaBoost algorithm.  
+* predict.py: The python script to predict test data with my AdaBoost model.  
 * sk.py: The use of third-party library scikit-learn, to compare results with my model.  
 * plot.py: The python script to generate figures to show the relationship between errors and iterations.  
 
 #### Output
 
 * out.txt: The complete output of the process, including:  
-    1. The weak learner of each iteration;     
-    2. The information of fist error = 0 in training process; 
-    3. The result of testing with different number of iterations; 
-    4. The result of scikit-learn Adaboost;
-    5. The result of scikit-learn SVM;
+    1. The weak learner of each iteration;
+    2. My Adaboost model;
+    3. The predicting result of my Adaboost with different number of iterations; 
+    4. The predicting result of scikit-learn AdaBoost with default parameters;
+    5. The predicting result of scikit-learn AdaBoost with best parameters;
+    6. The analysis of scikit-learn AdaBoost parameters;
+    7. The predicting result of scikit-learn SVM.
