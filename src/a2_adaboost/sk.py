@@ -12,8 +12,8 @@ import plot
 import matplotlib.pyplot as plt
 
 
-# sklearn grid_search and train, return sk AdaBoost model
-def adaboost_sk(data_train, label_train, data_test, label_test):
+# sklearn train with default parameter, return sk AdaBoost model and training time
+def adaboost_sk_default(data_train, label_train, data_test, label_test):
 
     # train and predict with default parameter
     start = time.time()
@@ -23,25 +23,13 @@ def adaboost_sk(data_train, label_train, data_test, label_test):
     end = time.time()
     training_time = end-start
 
-    err_train = np.ones((1, 100))
-    err_train = err_train - np.array(list(sk_boost_model.staged_score(data_train, label_train)))
+    return sk_boost_model, training_time
 
-    start = time.time()
-    err_test = np.ones((1, 100))
-    err_test = err_test - np.array(list(sk_boost_model.staged_score(data_test, label_test)))
-    end = time.time()
-    test_time = end-start
 
-    print('\n## Predict error with default parameter from 1-100 n_estimator(s)\n', err_test[0])
-    print('\n  * Final test error：', 1 - sk_boost_model.score(data_test, label_test))
-    print('  * Min error at Iteration %d: %s' % (err_test.argmin(), err_test.min()))
-    print('  * Avg error from Iteration 15-100: %s' % (err_test[::, 15:].mean()))
-    # plot error rate
-    plot.plot_err_round(err_train[0], err_test[0], 'training', 'test', 'Sklearn Adaboost-default parameter')
-    # print running time
-    print('\n## Running time (with default parameter)')
-    print('\n   * Training time: %.2fs' % training_time)
-    print('   * Test time: %.2fs' % test_time)
+# sklearn grid_search and train with best parameters,
+# analyse parameters
+# return sk AdaBoost model and training time
+def adaboost_sk_best(data_train, label_train, data_test, label_test):
 
     # grid search for best parameter
     print('\n## Grid search: K-fold cross validation')
@@ -75,29 +63,9 @@ def adaboost_sk(data_train, label_train, data_test, label_test):
     end = time.time()
     training_time = end-start
 
-    err_train = np.ones((1, grid_search.best_params_['n_estimators']))
-    err_train = err_train - np.array(list(sk_boost_model.staged_score(data_train, label_train)))
-
-    start = time.time()
-    err_test = np.ones((1, grid_search.best_params_['n_estimators']))
-    err_test = err_test - np.array(list(sk_boost_model.staged_score(data_test, label_test)))
-    end = time.time()
-    test_time = end-start
-
-    print('\n## Predict error with best parameter from 1-100 n_estimator(s)\n', err_test[0])
-    print('\n  * Final test error：', 1 - sk_boost_model.score(data_test, label_test))
-    print('  * Min error at Iteration %d: %s' % (err_test.argmin(), err_test.min()))
-    print('  * Avg error from Iteration 15-100: %s' % (err_test[::, 15:].mean()))
-    # plot error rate
-    plot.plot_err_round(err_train[0], err_test[0], 'training', 'test', 'Sklearn Adaboost-best parameter')
-    print('\n## Running time (with best parameter)')
-    # print running time
-    print('\n   * Training time: %.2fs' % training_time)
-    print('   * Test time: %.2fs' % test_time)
-
     # analyse parameters' effects on performance
     fig = plt.figure(figsize=(15, 10))
-    fig.suptitle('Algorithm & learning_rate - error')
+    fig.suptitle('Algorithm & learning_rate - accuracy')
     for i, learning_rate in enumerate([0.6, 0.8, 1, 1.2]):
         ax = fig.add_subplot(2, 2, i+1)
         for algorithm in alg:
@@ -106,22 +74,20 @@ def adaboost_sk(data_train, label_train, data_test, label_test):
                                      n_estimators=100,
                                      learning_rate=learning_rate)
             clf.fit(data_train, label_train.ravel())
-            err_train = np.ones((1, grid_search.best_params_['n_estimators']))
-            err_test = np.ones((1, grid_search.best_params_['n_estimators']))
-            err_train = err_train - np.array(list(clf.staged_score(data_train, label_train)))
-            err_test = err_test - np.array(list(clf.staged_score(data_test, label_test)))
+            acc_train = np.array(list(clf.staged_score(data_train, label_train)))
+            acc_test = np.array(list(clf.staged_score(data_test, label_test)))
             # plot
             x = range(1, grid_search.best_params_['n_estimators']+1)
-            ax.plot(x, err_train[0], label="%s training error" % algorithm)
-            ax.plot(x, err_test[0], label="%s testing error" % algorithm)
+            ax.plot(x, acc_train, label="%s training accuracy" % algorithm)
+            ax.plot(x, acc_test, label="%s testing accuracy" % algorithm)
         ax.set_title("learning_rate: %.2f" % learning_rate)
         ax.set_xlabel("estimators")
-        ax.set_ylabel("error rate")
+        ax.set_ylabel("accuracy")
         plt.legend(loc="best")
-    plt.savefig('../../output/Algorithm&learning_rate-error.png')
+    plt.savefig('../../output/Algorithm&learning_rate-accuracy.png')
     plt.show()
 
-    return sk_boost_model
+    return sk_boost_model, training_time
 
 
 # sklearn grid_search and train, return sk SVM model
@@ -150,6 +116,6 @@ def svm_sk(data_train, label_train):
                                gamma=grid_search.best_params_['gamma'])
     sk_svm_model.fit(data_train, label_train.ravel())
     end = time.time()
-    print('\n## Training time: %.2fs' % (end - start))
+    training_time = end-start
 
-    return sk_svm_model
+    return sk_svm_model, training_time

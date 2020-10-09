@@ -104,8 +104,8 @@ including:
 
 * out.txt: The complete output of the process, including:  
     1. The weak learner of each iteration;
-    2. My Adaboost model;
-    3. The predicting result of my Adaboost with different number of iterations; 
+    2. My AdaBoost model;
+    3. The predicting result of my AdaBoost with different number of iterations; 
     4. The predicting result of scikit-learn AdaBoost with default parameters;
     5. The predicting result of scikit-learn AdaBoost with best parameters;
     6. The analysis of scikit-learn AdaBoost parameters;

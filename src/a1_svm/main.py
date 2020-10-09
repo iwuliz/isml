@@ -89,9 +89,9 @@ else:
     # 6. print accuracy of svm_model_sk
     print('\n\n# 6. Sklearn: predict')
     print('\n## Sklearn: Predict with training data set:')
-    print('     accuracy： %.2f%%' % (100 * svm_model_sk.score(data_train, label_train)))
+    print('     accuracy: %.2f%%' % (100 * svm_model_sk.score(data_train, label_train)))
     print('## Sklearn: Predict with testing data set:')
-    print('     accuracy： %.2f%%' % (100 * svm_model_sk.score(data_test, label_test)))
+    print('     accuracy: %.2f%%' % (100 * svm_model_sk.score(data_test, label_test)))
 
     # 7. compare results
     print('\n\n# 7. Compare solutions')
