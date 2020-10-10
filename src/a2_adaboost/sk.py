@@ -13,9 +13,7 @@ import matplotlib.pyplot as plt
 
 
 # sklearn train with default parameter, return sk AdaBoost model and training time
-def adaboost_sk_default(data_train, label_train, data_test, label_test):
-
-    # train and predict with default parameter
+def adaboost_sk_default(data_train, label_train):
     start = time.time()
     sk_boost_model = AdaBoostClassifier(DecisionTreeClassifier(max_depth=1),
                                         n_estimators=100)
@@ -24,6 +22,45 @@ def adaboost_sk_default(data_train, label_train, data_test, label_test):
     training_time = end-start
 
     return sk_boost_model, training_time
+
+
+def adaboost_sk_deeper(data_train, label_train, data_test, label_test):
+
+    plt.figure(figsize=(8, 5))
+    plt.title('Accuracy of different depth of weak learns')
+    plt.xlabel('# rounds')
+    plt.ylabel('accuracy: %')
+
+    for depth in range(1, 6):
+        start = time.time()
+        sk_boost_model = AdaBoostClassifier(DecisionTreeClassifier(max_depth=depth),
+                                            n_estimators=100)
+        sk_boost_model.fit(data_train, label_train.ravel())
+        end = time.time()
+        training_time = end-start
+        acc_train = np.array(list(sk_boost_model.staged_score(data_train, label_train)))
+        start = time.time()
+        acc_test = np.array(list(sk_boost_model.staged_score(data_test, label_test)))
+        end = time.time()
+        test_time = end - start
+
+        print('\n### depth = %d' % depth)
+        print('\n   * Max accuracy at Iteration %d: %s%%' % (acc_test.argmax(), 100 * acc_test.max()))
+        print('   * Final test accuracy: %s%%' % float(100 * sk_boost_model.score(data_test, label_test)))
+        print('   * Training time: %.2fs' % training_time)
+        print('   * Test time: %.2fs' % test_time)
+
+        x = range(0, acc_train.shape[0])
+        y1 = 100 * acc_train
+        y2 = 100 * acc_test
+        plt.ylim(85, 101)
+        plt.plot(x, y1, label='max_depth = %d, training accuracy' % depth)
+        plt.plot(x, y2, label='max_depth = %d, test accuracy' % depth)
+
+    plt.legend(loc='best')
+
+    plt.savefig('../../output/acc&iteration with deeper weak learns')
+    plt.show()
 
 
 # sklearn grid_search and train with best parameters,

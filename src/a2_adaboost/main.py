@@ -33,10 +33,10 @@ test_time = end-start
 acc_test_adaboost = np.ones((1, 100))
 acc_test_adaboost = acc_test_adaboost - err_test_adaboost
 print('\n## Predict accuracy from 1-100 weak classifier(s)\n', acc_test_adaboost[0])
-print('\n  * Accuracy at Iteration %d: %s%%' % (first_0_at, 100*acc_test_adaboost[0][first_0_at]))
-print('  * Max accuracy at Iteration %d: %s%%' % (acc_test_adaboost[0].argmax(), 100*acc_test_adaboost[0].max()))
-print('  * Avg accuracy from Iteration 15-100: %s%%' % (100*acc_test_adaboost[0][15:].mean()))
-print('  * Final test accuracy: %s%%' % float(100*acc_test_adaboost[0][99]))
+print('\n   * Accuracy at Iteration %d: %s%%' % (first_0_at, 100*acc_test_adaboost[0][first_0_at]))
+print('   * Max accuracy at Iteration %d: %s%%' % (acc_test_adaboost[0].argmax(), 100*acc_test_adaboost[0].max()))
+print('   * Avg accuracy from Iteration 15-100: %s%%' % (100*acc_test_adaboost[0][15:].mean()))
+print('   * Final test accuracy: %s%%' % float(100*acc_test_adaboost[0][99]))
 print('\n## Running time')
 print('   * Training time: %.2fs' % training_time)
 print('   * Test time: %.2fs' % test_time)
@@ -46,7 +46,7 @@ plot.plot_acc_round(acc_train_adaboost[0], acc_test_adaboost[0], 'training', 'te
 # train and predict with sklearn AdaBoost to compare
 print('\n# 2. Sklearn AdaBoost')
 # train and predict with default parameters
-sk_adaboost_default, training_time = sk.adaboost_sk_default(data_train, label_train, data_test, label_test)
+sk_adaboost_default, training_time = sk.adaboost_sk_default(data_train, label_train)
 acc_train_sk_default = np.array(list(sk_adaboost_default.staged_score(data_train, label_train)))
 start = time.time()
 acc_test_sk_default = np.array(list(sk_adaboost_default.staged_score(data_test, label_test)))
@@ -54,9 +54,9 @@ end = time.time()
 test_time = end - start
 
 print('\n## Predict accuracy with default parameter from 1-100 n_estimator(s)\n', acc_test_sk_default)
-print('\n  * Max accuracy at Iteration %d: %s%%' % (acc_test_sk_default.argmax(), 100*acc_test_sk_default.max()))
-print('  * Avg error from Iteration 15-100: %s%%' % (100*acc_test_sk_default[15:].mean()))
-print('  * Final test accuracy: %s%%' % float(100*sk_adaboost_default.score(data_test, label_test)))
+print('\n   * Max accuracy at Iteration %d: %s%%' % (acc_test_sk_default.argmax(), 100*acc_test_sk_default.max()))
+print('   * Avg error from Iteration 15-100: %s%%' % (100*acc_test_sk_default[15:].mean()))
+print('   * Final test accuracy: %s%%' % float(100*sk_adaboost_default.score(data_test, label_test)))
 print('\n## Running time (with default parameter)')
 print('\n   * Training time: %.2fs' % training_time)
 print('   * Test time: %.2fs' % test_time)
@@ -77,14 +77,18 @@ end = time.time()
 test_time = end - start
 
 print('\n## Predict accuracy with best parameter from 1-100 n_estimator(s)\n', acc_test_sk_best)
-print('\n  * Max accuracy at Iteration %d: %s%%' % (acc_test_sk_best.argmax(), 100*acc_test_sk_best.max()))
-print('  * Avg accuracy from Iteration 15-100: %s%%' % (100*acc_test_sk_best[15:].mean()))
-print('  * Final test accuracy: %s%%' % float(100*sk_adaboost_best.score(data_test, label_test)))
+print('\n   * Max accuracy at Iteration %d: %s%%' % (acc_test_sk_best.argmax(), 100*acc_test_sk_best.max()))
+print('   * Avg accuracy from Iteration 15-100: %s%%' % (100*acc_test_sk_best[15:].mean()))
+print('   * Final test accuracy: %s%%' % float(100*sk_adaboost_best.score(data_test, label_test)))
 print('\n## Running time (with best parameter)')
 print('\n   * Training time: %.2fs' % training_time)
 print('   * Test time: %.2fs' % test_time)
 # plot accuracy rate
 plot.plot_acc_round(acc_train_sk_best, acc_test_sk_best, 'training', 'test', 'Sklearn AdaBoost-best parameter')
+
+# experiment with deeper classifier
+print('\n## Analysis of depth of weak learners')
+sk.adaboost_sk_deeper(data_train, label_train, data_test, label_test)
 
 
 # train and predict with sklearn SVM to compare

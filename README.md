@@ -109,4 +109,5 @@ including:
     4. The predicting result of scikit-learn AdaBoost with default parameters;
     5. The predicting result of scikit-learn AdaBoost with best parameters;
     6. The analysis of scikit-learn AdaBoost parameters;
-    7. The predicting result of scikit-learn SVM.
+    7. The analysis of depth of weak learners;
+    8. The predicting result of scikit-learn SVM.
