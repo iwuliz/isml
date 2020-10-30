@@ -74,7 +74,7 @@ and compare the results with an third-party scikit-learn AdaBoost and SVM.
  
 Console command: python main.py or python3 main.py  
 >note: This would take 3 minutes to complete.    
-> Please ensure that the data files 'wdbc_data.csv' are at directory: data/  
+> Please ensure that the data file 'wdbc_data.csv' is at directory: data/  
 > The output files are at: output/  
  
 
@@ -111,3 +111,53 @@ including:
     6. The analysis of scikit-learn AdaBoost parameters;
     7. The analysis of depth of weak learners;
     8. The predicting result of scikit-learn SVM.
+
+## a3_pac&k-means:
+
+### Introduction
+
+This practice aims to implement PCA and k-means classification   
+and analyse the impact of reducing dimensions to KNN and SVM performance.
+
+### How to run  
+ 
+Console command: python main.py or python3 main.py  
+> note:  
+> It would take 9 minutes to complete the execution.
+> This running time include some repeated experiments to avoid random bias,
+> but not include cross validation for SVM which takes hours (I commented this part in sk.py)     
+> Please ensure that the data files 'mnist_train.csv' and 'mnist_test.csv' are at directory: data/    
+> The output files are at: output/  
+ 
+
+### Documents list:
+
+#### Report
+
+* Intro_to_Statis_Machine_learning-Assignment_3_report-Wuli_Zuo-a1785343.pdf:  Report to my A3  
+including:  
+    1. Algorithm description of PCA   
+    2. Algorithm description of k-means  
+    3. Introduction to my code  
+    4. Experiments and result analysis  
+    5. Reference
+
+#### Code
+
+* main.py: The program entry, control the experiment process.  
+* load.py: The python script to load data from the data file.  
+* pca.py: Implementation of PCA.
+* kmeans.py: Implementation of k-means classification.   
+* noise.py: The python script to add gaussian noise to the original data.  
+* sk.py: The use of third-party library scikit-learn for analysis.  
+* plot.py: The python script to generate figures to show accuracies, losses and percentages.  
+
+#### Output
+
+* out.txt: The complete output of the process, including:  
+    1. The eigen_val of PCA on training data;
+    2. The accuracy of knn to my PCA and Sklearn PCA, and Sklearn SVM on training and test data;
+    3. The final loss of k-means clustering on training data; 
+    4. The average percentages sharing the same label with the initial centres under different dimensions ;
+    5. The predicting result of scikit-learn AdaBoost with best parameters;
+    6. The accuracy of knn to my PCA and Sklearn SVM on noised training and test data;
