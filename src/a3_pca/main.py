@@ -71,7 +71,7 @@ plot.plot_acc(dim_options, np.array(acc_test_1nn), 'PCA&1NN')
 plot.plot_accs(dim_options, np.array(acc_test_1nn), np.array(test_acc_svm), '1NN', 'SVM', 'Accuracy')
 
 
-# Task 3: classify training data with k-means
+# Task 3: classify training data with K-means
 print('\n# 3 Implement K-means clustering')
 
 data_set = data_train.tolist()
@@ -125,7 +125,7 @@ plot.plot_pcts(dim_options, np.array(pcts), 'Avg_percentage')
 
 
 # Task 5: append noisy dimensions, apply PCA, test and analyse with 1NN and SVM
-print('\n# 5 Append noisy dimensions, test and analyse with 1KNN and SVM')
+print('\n# 5 Append noisy dimensions, test and analyse with 1NN and SVM')
 
 # append Gaussian noise to training data and test data
 data_train_noised = noise.add_gauss(data_train, 256)

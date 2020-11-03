@@ -124,7 +124,7 @@ and analyse the impact of Gaussian noise on the above approaches.
  
 Console command: python main.py or python3 main.py  
 > note:  
-> It would take 10 minutes to complete the execution.
+> It would take 9 minutes to complete the execution.
 > This running time include some repeated experiments to avoid random bias,
 > but not include cross validation for SVM which takes hours (I commented this part in sk.py)     
 > Please ensure that the data files 'mnist_train.csv' and 'mnist_test.csv' are at directory: data/    
