@@ -9,7 +9,8 @@ import numpy as np
 def add_gauss(data, add):
     m = data.shape[0]
     # use mean and standard deviation to generate gaussian noise
-    noise = data.std()*np.random.randn(m, add)+data.mean()
+    # noise = data.std()*np.random.randn(m, add)+data.mean()
+    noise = np.random.randn(m, add)
     # append noise to original data
     data_polluted = np.hstack((data, noise))
     return data_polluted

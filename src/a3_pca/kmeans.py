@@ -8,11 +8,11 @@ import random
 
 
 # compute Euclidean distance
-def generate_dis(data_set, centroids, k):
+def generate_dis(data_set, centres, k):
     dis_list = []
     for data in data_set:
         # compute distance to each centroid
-        dis_arr = np.tile(data, (k, 1)) - centroids
+        dis_arr = np.tile(data, (k, 1)) - centres
         dis_sqsum = np.sum(dis_arr * dis_arr, axis=1)
         dis = np.sqrt(dis_sqsum)
         dis_list.append(dis)
@@ -21,34 +21,34 @@ def generate_dis(data_set, centroids, k):
     return dis_list
 
 
-# classify and compute centroids
-def classify(data_set, centroids, k):
+# classify and compute centres
+def classify(data_set, centres, k):
     # compute distances
-    dis_list = generate_dis(data_set, centroids, k)
-    # classify and compute new centroids
+    dis_list = generate_dis(data_set, centres, k)
+    # classify and compute new centres
     min_dis_idx = np.argmin(dis_list, axis=1)
     loss = np.min(dis_list, 1).sum()
-    new_centroids = pd.DataFrame(data_set).groupby(min_dis_idx).mean()
-    new_centroids = new_centroids.values
+    new_centres = pd.DataFrame(data_set).groupby(min_dis_idx).mean()
+    new_centres = new_centres.values
     # compute change
-    change = new_centroids - centroids
-    return change, new_centroids, loss
+    change = new_centres - centres
+    return change, new_centres, loss
 
 
-# perform k-means
-def kmeans(data_set, centroids, k):
-    # repeat to generate new centroids until no more changes
-    change, newCentroids, loss = classify(data_set, centroids, k)
+# perform K-means
+def kmeans(data_set, centres, k):
+    # repeat to generate new centres until no more changes
+    change, new_centres, loss = classify(data_set, centres, k)
     loss_list = [loss]
     while np.any(change != 0):
-        change, newCentroids, loss = classify(data_set, newCentroids, k)
+        change, new_centres, loss = classify(data_set, new_centres, k)
         loss_list.append(loss)
-    centroids = sorted(newCentroids.tolist())
+    centres = sorted(new_centres.tolist())
 
     # generate the final cluster
     clusters = []
     clusters_idx = []
-    dis_list = generate_dis(data_set, centroids, k)
+    dis_list = generate_dis(data_set, centres, k)
     min_dist_idx = np.argmin(dis_list, axis=1)
     for i in range(k):
         clusters.append([])
@@ -56,7 +56,7 @@ def kmeans(data_set, centroids, k):
     for i, j in enumerate(min_dist_idx):
         clusters[j].append(data_set[i])
         clusters_idx[j].append(i)
-    return centroids, clusters, clusters_idx, loss_list
+    return centres, clusters, clusters_idx, loss_list
 
 
 # generate random initial centres, one from each class

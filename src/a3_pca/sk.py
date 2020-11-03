@@ -16,7 +16,7 @@ def sk_pca(data_train, data_test, k):
     return select_data_train, select_data_test
 
 
-def sk_knn(data_train, label_train, data_test, label_test, k):
+def sk_1nn(data_train, label_train, data_test, label_test):
     # train KNN classifier
     clf = neighbors.KNeighborsClassifier(n_neighbors=1, algorithm='kd_tree')
     clf.fit(data_train, label_train.ravel())
